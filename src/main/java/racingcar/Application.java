@@ -10,22 +10,10 @@ import java.util.List;
 public class Application {
     public static void main(String[] args) {
 
-        // 사용자 입력
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        String inputNames = Console.readLine();
+        List<String> names = getInputNames();
+        int count = getInputCount();
 
-        System.out.println("시도할 횟수는 몇 회인가요?");
-        String inputCount = Console.readLine();
-
-        // 입력값 정제
-        List<String> names = Arrays.stream(inputNames.split(",")).toList();
-        int count = Integer.parseInt(inputCount);
-
-        // 객체 생성
-        List<Car> cars = new ArrayList<>();
-        for (String name : names) {
-            cars.add(new Car(name, 0));
-        }
+        List<Car> cars = createCars(names);
 
         // 자동차 경주 시뮬레이션
         System.out.println("실행 결과");
@@ -77,5 +65,29 @@ public class Application {
         public void increaseAdvance() {
             this.advance++;
         }
+    }
+
+    private static List<String> getInputNames() {
+        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+        String inputNames = Console.readLine();
+
+        return Arrays.stream(inputNames.split(",")).toList();
+    }
+
+    private static int getInputCount() {
+        System.out.println("시도할 횟수는 몇 회인가요?");
+        String inputCount = Console.readLine();
+
+        return Integer.parseInt(inputCount);
+    }
+
+    private static List<Car> createCars(List<String> names) {
+        List<Car> cars = new ArrayList<>();
+
+        for (String name : names) {
+            cars.add(new Car(name, 0));
+        }
+
+        return cars;
     }
 }
