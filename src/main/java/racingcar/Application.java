@@ -9,6 +9,16 @@ import java.util.List;
 
 public class Application {
 
+    private static final String REQUEST_NAME_MESSAGE = "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)";
+    private static final String REQUEST_COUNT_MESSAGE = "시도할 횟수는 몇 회인가요?";
+
+    private static final String DELIMITER = ",";
+
+    private static final String PRINT_RUN_RESULT_MESSAGE = "실행 결과";
+    private static final String PRINT_NAME_POSITION_SEPARATOR = " : ";
+    private static final String PRINT_POSITION_MARKER = "-";
+    private static final String PRINT_WINNER_MESSAGE = "최종 우승자 : ";
+    private static final String PRINT_WINNER_DELIMITER = ", ";
 
     private static class Car {
         String name;
@@ -36,14 +46,14 @@ public class Application {
     }
 
     private static List<String> getInputNames() {
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+        System.out.println(REQUEST_NAME_MESSAGE);
         String inputNames = Console.readLine();
 
-        return Arrays.stream(inputNames.split(",")).toList();
+        return Arrays.stream(inputNames.split(DELIMITER)).toList();
     }
 
     private static int getInputCount() {
-        System.out.println("시도할 횟수는 몇 회인가요?");
+        System.out.println(REQUEST_COUNT_MESSAGE);
         String inputCount = Console.readLine();
 
         return Integer.parseInt(inputCount);
@@ -60,7 +70,7 @@ public class Application {
     }
 
     private static void runRace(int count, List<Car> cars) {
-        System.out.println("실행 결과");
+        System.out.println(PRINT_RUN_RESULT_MESSAGE);
         for (int i = 0; i < count; i++) {
             updateCarsAdvance(cars);
             printCarsPosition(cars);
@@ -79,7 +89,7 @@ public class Application {
 
     private static void printCarsPosition(List<Car> cars) {
         for (Car car : cars) {
-            System.out.println(car.name + " : " + "-".repeat(car.advance));
+            System.out.println(car.name + PRINT_NAME_POSITION_SEPARATOR + PRINT_POSITION_MARKER.repeat(car.advance));
         }
         System.out.println();
     }
@@ -88,7 +98,7 @@ public class Application {
         int maxAdvance = getMaxAdvance(cars);
         List<String> winners = getWinners(cars, maxAdvance);
 
-        System.out.println("최종 우승자 : " + String.join(", ", winners));
+        System.out.println(PRINT_WINNER_MESSAGE + String.join(PRINT_WINNER_DELIMITER, winners));
     }
 
 
