@@ -1,6 +1,7 @@
 package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,24 @@ public class Application {
         for (String name : names) {
             cars.add(new Car(name, 0));
         }
+
+        System.out.println("실행 결과");
+        for (int i = 0; i < count; i++) {
+            for (Car car : cars) {
+                int randValue = Randoms.pickNumberInRange(0, 9);
+
+                if (randValue >= 4) {
+                    car.increaseAdvance();
+                }
+
+                System.out.print(car.name + " : ");
+                for (int j = 0; j < car.advance; j++) {
+                    System.out.print("-");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
 
     private static class Car {
@@ -31,6 +50,10 @@ public class Application {
         public Car(String name, int advance) {
             this.name = name;
             this.advance = advance;
+        }
+
+        public void increaseAdvance() {
+            this.advance++;
         }
     }
 }
