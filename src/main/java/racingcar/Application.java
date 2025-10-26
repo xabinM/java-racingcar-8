@@ -25,8 +25,19 @@ public class Application {
         int advance;
 
         public Car(String name, int advance) {
+            validateCarName(name);
             this.name = name;
             this.advance = advance;
+        }
+
+        private void validateCarName(String name) {
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+            }
+
+            if (name.length() > 5) {
+                throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+            }
         }
 
         public void increaseAdvance() {
@@ -49,6 +60,10 @@ public class Application {
         System.out.println(REQUEST_NAME_MESSAGE);
         String inputNames = Console.readLine();
 
+        if (inputNames == null || inputNames.isBlank()) {
+            throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+        }
+
         return Arrays.stream(inputNames.split(DELIMITER)).toList();
     }
 
@@ -56,7 +71,18 @@ public class Application {
         System.out.println(REQUEST_COUNT_MESSAGE);
         String inputCount = Console.readLine();
 
-        return Integer.parseInt(inputCount);
+        int count;
+        try {
+            count = Integer.parseInt(inputCount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("시도 횟수는 숫자만 입력해야 합니다.");
+        }
+
+        if (count <= 0) {
+            throw new IllegalArgumentException("시도 횟수는 1회 이상이어야 합니다.");
+        }
+
+        return count;
     }
 
     private static List<Car> createCars(List<String> names) {
