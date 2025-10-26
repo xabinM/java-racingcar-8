@@ -32,24 +32,7 @@ public class Application {
         List<Car> cars = createCars(names);
 
         runRace(count, cars);
-
-        // 최종 우승자 출력
-        int maxAdvance = 0;
-
-        for (Car car : cars) {
-            if (car.advance > maxAdvance) {
-                maxAdvance = car.advance;
-            }
-        }
-
-        List<String> winners = new ArrayList<>();
-        for (Car car : cars) {
-            if (car.advance == maxAdvance) {
-                winners.add(car.name);
-            }
-        }
-
-        System.out.println("최종 우승자 : " + String.join(", ", winners));
+        printWinner(cars);
     }
 
     private static List<String> getInputNames() {
@@ -77,7 +60,6 @@ public class Application {
     }
 
     private static void runRace(int count, List<Car> cars) {
-
         System.out.println("실행 결과");
         for (int i = 0; i < count; i++) {
             updateCarsAdvance(cars);
@@ -100,5 +82,35 @@ public class Application {
             System.out.println(car.name + " : " + "-".repeat(car.advance));
         }
         System.out.println();
+    }
+
+    private static void printWinner(List<Car> cars) {
+        int maxAdvance = getMaxAdvance(cars);
+        List<String> winners = getWinners(cars, maxAdvance);
+
+        System.out.println("최종 우승자 : " + String.join(", ", winners));
+    }
+
+
+    private static int getMaxAdvance(List<Car> cars) {
+        int maxAdvance = 0;
+        for (Car car : cars) {
+            if (car.advance > maxAdvance) {
+                maxAdvance = car.advance;
+            }
+        }
+
+        return maxAdvance;
+    }
+
+    private static List<String> getWinners(List<Car> cars, int maxAdvance) {
+        List<String> winners = new ArrayList<>();
+        for (Car car : cars) {
+            if (car.advance == maxAdvance) {
+                winners.add(car.name);
+            }
+        }
+
+        return winners;
     }
 }
