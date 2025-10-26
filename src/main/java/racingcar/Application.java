@@ -10,20 +10,24 @@ import java.util.List;
 public class Application {
     public static void main(String[] args) {
 
+        // 사용자 입력
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String inputNames = Console.readLine();
 
         System.out.println("시도할 횟수는 몇 회인가요?");
         String inputCount = Console.readLine();
 
+        // 입력값 정제
         List<String> names = Arrays.stream(inputNames.split(",")).toList();
         int count = Integer.parseInt(inputCount);
 
+        // 객체 생성
         List<Car> cars = new ArrayList<>();
         for (String name : names) {
             cars.add(new Car(name, 0));
         }
 
+        // 자동차 경주 시뮬레이션
         System.out.println("실행 결과");
         for (int i = 0; i < count; i++) {
             for (Car car : cars) {
@@ -41,6 +45,24 @@ public class Application {
             }
             System.out.println();
         }
+
+        // 최종 우승자 출력
+        int maxAdvance = 0;
+
+        for (Car car : cars) {
+            if (car.advance > maxAdvance) {
+                maxAdvance = car.advance;
+            }
+        }
+
+        List<String> winners = new ArrayList<>();
+        for (Car car : cars) {
+            if (car.advance == maxAdvance) {
+                winners.add(car.name);
+            }
+        }
+
+        System.out.println("최종 우승자 : " + String.join(", ", winners));
     }
 
     private static class Car {
