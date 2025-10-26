@@ -11,14 +11,19 @@ public class Application {
 
     private static final String REQUEST_NAME_MESSAGE = "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)";
     private static final String REQUEST_COUNT_MESSAGE = "시도할 횟수는 몇 회인가요?";
+    private static final String PRINT_RUN_RESULT_MESSAGE = "실행 결과";
+    private static final String PRINT_WINNER_MESSAGE = "최종 우승자 : ";
 
     private static final String DELIMITER = ",";
-
-    private static final String PRINT_RUN_RESULT_MESSAGE = "실행 결과";
     private static final String PRINT_NAME_POSITION_SEPARATOR = " : ";
     private static final String PRINT_POSITION_MARKER = "-";
-    private static final String PRINT_WINNER_MESSAGE = "최종 우승자 : ";
     private static final String PRINT_WINNER_DELIMITER = ", ";
+
+    private static final String ERROR_NAME_EMPTY = "자동차 이름은 비어있을 수 없습니다.";
+    private static final String ERROR_NAME_TOO_LONG = "자동차 이름은 5자 이하만 가능합니다.";
+    private static final String ERROR_COUNT_NOT_NUMBER = "시도 횟수는 숫자만 입력해야 합니다.";
+    private static final String ERROR_COUNT_NOT_POSITIVE = "시도 횟수는 1회 이상이어야 합니다.";
+    private static final String ERROR_RANDOM_INVALID_RANGE = "랜덤 숫자가 잘못 생성되었습니다.";
 
     private static class Car {
         String name;
@@ -32,11 +37,11 @@ public class Application {
 
         private void validateCarName(String name) {
             if (name == null || name.isBlank()) {
-                throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+                throw new IllegalArgumentException(ERROR_NAME_EMPTY);
             }
 
             if (name.length() > 5) {
-                throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+                throw new IllegalArgumentException(ERROR_NAME_TOO_LONG);
             }
         }
 
@@ -61,7 +66,7 @@ public class Application {
         String inputNames = Console.readLine();
 
         if (inputNames == null || inputNames.isBlank()) {
-            throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_NAME_EMPTY);
         }
 
         return Arrays.stream(inputNames.split(DELIMITER)).toList();
@@ -75,11 +80,11 @@ public class Application {
         try {
             count = Integer.parseInt(inputCount);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("시도 횟수는 숫자만 입력해야 합니다.");
+            throw new IllegalArgumentException(ERROR_COUNT_NOT_NUMBER);
         }
 
         if (count <= 0) {
-            throw new IllegalArgumentException("시도 횟수는 1회 이상이어야 합니다.");
+            throw new IllegalArgumentException(ERROR_COUNT_NOT_POSITIVE);
         }
 
         return count;
@@ -108,7 +113,7 @@ public class Application {
             int randomNum = Randoms.pickNumberInRange(0, 9);
 
             if (randomNum < 0 || randomNum > 9) {
-                throw new IllegalStateException("랜덤 숫자가 잘못 생성되었습니다.");
+                throw new IllegalStateException(ERROR_RANDOM_INVALID_RANGE);
             }
 
             if (randomNum >= 4) {
