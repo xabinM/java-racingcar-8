@@ -8,6 +8,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Application {
+
+
+    private static class Car {
+        String name;
+        int advance;
+
+        public Car(String name, int advance) {
+            this.name = name;
+            this.advance = advance;
+        }
+
+        public void increaseAdvance() {
+            this.advance++;
+        }
+    }
+
     public static void main(String[] args) {
 
         List<String> names = getInputNames();
@@ -15,24 +31,7 @@ public class Application {
 
         List<Car> cars = createCars(names);
 
-        // 자동차 경주 시뮬레이션
-        System.out.println("실행 결과");
-        for (int i = 0; i < count; i++) {
-            for (Car car : cars) {
-                int randValue = Randoms.pickNumberInRange(0, 9);
-
-                if (randValue >= 4) {
-                    car.increaseAdvance();
-                }
-
-                System.out.print(car.name + " : ");
-                for (int j = 0; j < car.advance; j++) {
-                    System.out.print("-");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
+        runRace(count, cars);
 
         // 최종 우승자 출력
         int maxAdvance = 0;
@@ -51,20 +50,6 @@ public class Application {
         }
 
         System.out.println("최종 우승자 : " + String.join(", ", winners));
-    }
-
-    private static class Car {
-        String name;
-        int advance;
-
-        public Car(String name, int advance) {
-            this.name = name;
-            this.advance = advance;
-        }
-
-        public void increaseAdvance() {
-            this.advance++;
-        }
     }
 
     private static List<String> getInputNames() {
@@ -89,5 +74,31 @@ public class Application {
         }
 
         return cars;
+    }
+
+    private static void runRace(int count, List<Car> cars) {
+
+        System.out.println("실행 결과");
+        for (int i = 0; i < count; i++) {
+            updateCarsAdvance(cars);
+            printCarsPosition(cars);
+        }
+    }
+
+    private static void updateCarsAdvance(List<Car> cars) {
+        for (Car car : cars) {
+            int randomNum = Randoms.pickNumberInRange(0, 9);
+
+            if (randomNum >= 4) {
+                car.increaseAdvance();
+            }
+        }
+    }
+
+    private static void printCarsPosition(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.println(car.name + " : " + "-".repeat(car.advance));
+        }
+        System.out.println();
     }
 }
