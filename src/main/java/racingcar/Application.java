@@ -107,6 +107,10 @@ public class Application {
         for (Car car : cars) {
             int randomNum = Randoms.pickNumberInRange(0, 9);
 
+            if (randomNum < 0 || randomNum > 9) {
+                throw new IllegalStateException("랜덤 숫자가 잘못 생성되었습니다.");
+            }
+
             if (randomNum >= 4) {
                 car.increaseAdvance();
             }
