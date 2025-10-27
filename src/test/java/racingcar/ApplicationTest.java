@@ -46,6 +46,15 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("자동차 이름이 공백일 때 예외 발생 테스트")
+    void 이름_공백_예외_테스트() {
+        assertSimpleTest(() ->
+            assertThatThrownBy(() -> runException("", "1"))
+                .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
