@@ -64,6 +64,22 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("시도 횟수에 정수가 아닌 수를 입력했을 때 예외 발생 테스트")
+    void 시도횟수_소수입력_예외_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", "1.1"))
+                        .isInstanceOf(IllegalArgumentException.class));
+    }
+
+    @Test
+    @DisplayName("시도 횟수에 음수 입력 시 예외 발생 테스트")
+    void 시도횟수_음수입력_예외_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", "-1"))
+                        .isInstanceOf(IllegalArgumentException.class));
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
