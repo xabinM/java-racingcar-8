@@ -21,7 +21,7 @@ public class Application {
 
     private static final String ERROR_NAME_EMPTY = "자동차 이름은 비어있을 수 없습니다.";
     private static final String ERROR_NAME_TOO_LONG = "자동차 이름은 5자 이하만 가능합니다.";
-    private static final String ERROR_COUNT_NOT_NUMBER = "시도 횟수는 숫자만 입력해야 합니다.";
+    private static final String ERROR_COUNT_NOT_NUMBER = "시도 횟수는 정수만 입력해야 합니다.";
     private static final String ERROR_COUNT_NOT_POSITIVE = "시도 횟수는 1회 이상이어야 합니다.";
     private static final String ERROR_RANDOM_INVALID_RANGE = "랜덤 숫자가 잘못 생성되었습니다.";
 
